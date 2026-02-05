@@ -1,224 +1,1554 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>For My Valentine ❤️</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Valentine ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600&family=Playfair+Display:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,300&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --warm-rose: #FFE5E5;
+            --soft-peach: #FFD4D4;
+            --deep-rose: #FF9999;
+            --romantic-red: #E67E7E;
+            --text-dark: #5A3A3A;
+            --text-light: #8B6B6B;
+            --accent-gold: #D4AF37;
+        }
 
-<style>
-* {
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-body {
-  margin: 0;
-  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-  color: #4a1c1c;
-  overflow: hidden;
-}
+        html {
+            scroll-behavior: auto;
+            overflow-x: hidden;
+        }
 
-.screen {
-  display: none;
-  height: 100vh;
-  width: 100vw;
-  padding: 30px;
-  text-align: center;
-  animation: fadeIn 1s ease;
-}
+        body {
+            font-family: 'Crimson Pro', serif;
+            background: linear-gradient(135deg, var(--warm-rose) 0%, var(--soft-peach) 50%, #FFF0F0 100%);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
 
-.screen.active {
-  display: block;
-}
+        .section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 80px 20px 60px 20px;
+            position: relative;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+        
+        /* Special centering only for landing and final sections */
+        #section1, #section15, #section16 {
+            justify-content: center;
+            padding: 60px 20px;
+        }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px);}
-  to { opacity: 1; transform: translateY(0);}
-}
+        .section.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-button {
-  margin-top: 30px;
-  padding: 14px 28px;
-  font-size: 18px;
-  border-radius: 30px;
-  border: none;
-  background: #ff4d6d;
-  color: white;
-  cursor: pointer;
-  transition: 0.3s;
-}
+        /* Floating Hearts */
+        .heart {
+            position: fixed;
+            font-size: 24px;
+            opacity: 0.6;
+            pointer-events: none;
+            z-index: 1;
+            animation: float 4s ease-in-out infinite;
+            transition: transform 0.3s ease;
+        }
 
-button:hover {
-  transform: scale(1.05);
-}
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
 
-.bubble {
-  background: rgba(255,255,255,0.3);
-  padding: 14px;
-  margin: 10px auto;
-  border-radius: 20px;
-  width: fit-content;
-  animation: fadeIn 0.8s ease forwards;
-}
+        /* Landing Section */
+        .landing {
+            text-align: center;
+        }
 
-.card {
-  background: rgba(255,255,255,0.25);
-  padding: 20px;
-  border-radius: 20px;
-  margin: 20px auto;
-  max-width: 500px;
-  cursor: pointer;
-}
+        .landing-text {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            line-height: 1.5;
+            margin-bottom: 15px;
+            opacity: 0;
+            transform: translateY(20px);
+            color: var(--romantic-red);
+        }
 
-.hidden {
-  display: none;
-}
+        .landing-text.show {
+            animation: popIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
 
-.yes-btn {
-  background: #2ecc71;
-}
+        @keyframes popIn {
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
 
-.no-btn {
-  background: #e74c3c;
-  position: absolute;
-}
+        /* Buttons */
+        .btn {
+            margin-top: 40px;
+            padding: 18px 45px;
+            font-size: 1.4rem;
+            font-family: 'Cormorant Garamond', serif;
+            background: linear-gradient(135deg, var(--romantic-red), var(--deep-rose));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(230, 126, 126, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+        }
 
-img {
-  width: 85%;
-  max-width: 350px;
-  border-radius: 20px;
-  margin: 15px 0;
-}
+        .btn.show {
+            animation: fadeInUp 0.8s ease forwards;
+        }
 
-.small {
-  font-size: 12px;
-  opacity: 0.7;
-}
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-</style>
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(230, 126, 126, 0.5);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Section 2: Everything */
+        .everything-section {
+            max-width: 900px;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            text-align: center;
+            margin-bottom: 60px;
+            color: var(--romantic-red);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--accent-gold);
+        }
+
+        .bubble {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 25px 35px;
+            margin: 20px 0;
+            border-radius: 30px;
+            font-size: 1.5rem;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(90, 58, 58, 0.1);
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .bubble.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .bubble.emphasis {
+            background: linear-gradient(135deg, rgba(255, 228, 228, 0.9), rgba(255, 212, 212, 0.9));
+            font-style: italic;
+            font-weight: 600;
+            font-size: 1.7rem;
+            margin: 30px 0;
+        }
+
+        /* Memory Grid */
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            width: 100%;
+            padding: 40px 20px;
+        }
+
+        .memory-card {
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(90, 58, 58, 0.15);
+            cursor: pointer;
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .memory-card.show {
+            animation: cardAppear 0.6s ease forwards;
+        }
+
+        @keyframes cardAppear {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .memory-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(230, 126, 126, 0.3);
+        }
+
+        .memory-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .memory-content {
+            padding: 25px;
+        }
+
+        .memory-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: var(--romantic-red);
+            margin-bottom: 15px;
+        }
+
+        .memory-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: var(--text-light);
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+
+        .memory-card.clicked .memory-text {
+            opacity: 1;
+            max-height: 500px;
+            margin-top: 10px;
+        }
+
+        /* Quiz Section */
+        .quiz-intro {
+            text-align: center;
+            max-width: 700px;
+            margin-bottom: 40px;
+        }
+
+        .quiz-intro p {
+            font-size: 1.5rem;
+            margin: 15px 0;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .quiz-intro p.show {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .question-container {
+            background: white;
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 15px 50px rgba(90, 58, 58, 0.15);
+            max-width: 700px;
+            width: 100%;
+            margin: 20px 0;
+            opacity: 0;
+            transform: scale(0.9);
+        }
+
+        .question-container.show {
+            animation: questionAppear 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+
+        @keyframes questionAppear {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .question {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--romantic-red);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .options {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .option-btn {
+            padding: 15px 35px;
+            font-size: 1.3rem;
+            background: var(--soft-peach);
+            color: var(--text-dark);
+            border: 2px solid transparent;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Crimson Pro', serif;
+        }
+
+        .option-btn:hover {
+            background: var(--deep-rose);
+            color: white;
+            border-color: var(--romantic-red);
+        }
+
+        .answer-feedback {
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 20px;
+            font-size: 1.3rem;
+            line-height: 1.8;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .answer-feedback.show {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .answer-feedback.correct {
+            background: rgba(144, 238, 144, 0.2);
+            border: 2px solid lightgreen;
+        }
+
+        .answer-feedback.wrong {
+            background: rgba(255, 182, 193, 0.2);
+            border: 2px solid lightcoral;
+        }
+
+        .gujarati-poem {
+            font-family: 'Noto Sans Gujarati', sans-serif;
+            font-size: 1.4rem;
+            line-height: 2;
+            margin-top: 20px;
+            white-space: pre-line;
+            text-align: left;
+            padding: 20px;
+            background: rgba(255, 240, 240, 0.5);
+            border-radius: 15px;
+        }
+
+        /* Compliment Generator */
+        .compliment-box {
+            background: white;
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 15px 50px rgba(90, 58, 58, 0.15);
+            max-width: 800px;
+            width: 100%;
+            min-height: 350px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            text-align: center;
+        }
+
+        .compliment-text {
+            font-size: 1.8rem;
+            line-height: 1.8;
+            color: var(--text-dark);
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .compliment-text.show {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .compliment-text.warm {
+            color: var(--romantic-red);
+            font-style: italic;
+            font-weight: 600;
+        }
+
+        /* Valentine Cards */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            width: 100%;
+            padding: 40px 20px;
+        }
+
+        .valentine-card {
+            background: white;
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(90, 58, 58, 0.15);
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .valentine-card.show {
+            animation: cardAppear 0.6s ease forwards;
+        }
+
+        .valentine-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(230, 126, 126, 0.3);
+        }
+
+        .valentine-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--romantic-red), var(--deep-rose));
+        }
+
+        .card-front {
+            text-align: center;
+        }
+
+        .card-emoji {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: var(--romantic-red);
+            margin-bottom: 15px;
+        }
+
+        .card-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            font-style: italic;
+        }
+
+        .card-back {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .valentine-card.flipped .card-front {
+            display: none;
+        }
+
+        .valentine-card.flipped .card-back {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .card-benefits {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: var(--text-dark);
+        }
+
+        .card-note {
+            margin-top: 20px;
+            font-size: 1rem;
+            color: var(--text-light);
+            font-style: italic;
+        }
+
+        /* Final Question */
+        .final-question {
+            text-align: center;
+            max-width: 700px;
+        }
+
+        .final-heading {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            color: var(--romantic-red);
+            margin-bottom: 20px;
+        }
+
+        .final-subtext {
+            font-size: 1.4rem;
+            color: var(--text-light);
+            margin-bottom: 50px;
+        }
+
+        .final-buttons {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .final-btn {
+            padding: 20px 50px;
+            font-size: 1.5rem;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-family: 'Cormorant Garamond', serif;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .yes-btn {
+            background: linear-gradient(135deg, var(--romantic-red), var(--deep-rose));
+            color: white;
+            box-shadow: 0 10px 30px rgba(230, 126, 126, 0.4);
+        }
+
+        .yes-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(230, 126, 126, 0.6);
+        }
+
+        .no-btn {
+            background: var(--soft-peach);
+            color: var(--text-dark);
+            border: 2px solid var(--deep-rose);
+        }
+
+        .no-btn:hover {
+            background: var(--warm-rose);
+        }
+
+        /* Success Screen */
+        .success-screen {
+            text-align: center;
+            max-width: 800px;
+        }
+
+        .success-emoji {
+            font-size: 6rem;
+            margin-bottom: 30px;
+            animation: heartBeat 1s ease infinite;
+        }
+
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+        }
+
+        .success-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            line-height: 1.8;
+            color: var(--romantic-red);
+            margin: 20px 0;
+        }
+
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: var(--romantic-red);
+            position: absolute;
+            animation: confetti-fall 3s linear forwards;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Fireworks */
+        .firework {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            animation: firework-burst 1s ease-out forwards;
+        }
+
+        @keyframes firework-burst {
+            0% {
+                transform: translate(0, 0);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty));
+                opacity: 0;
+            }
+        }
+
+        /* Transition Text */
+        .transition-text {
+            font-size: 1.5rem;
+            line-height: 2;
+            margin: 15px 0;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .transition-text.show {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        /* Audio Control */
+        .audio-control {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--romantic-red), var(--deep-rose));
+            color: white;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(230, 126, 126, 0.4);
+            font-size: 1.5rem;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .audio-control:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 30px rgba(230, 126, 126, 0.6);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .section {
+                padding: 40px 15px;
+            }
+
+            .landing-text {
+                font-size: 2rem;
+            }
+
+            .btn {
+                padding: 15px 35px;
+                font-size: 1.2rem;
+            }
+
+            .memory-grid, .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .question-container {
+                padding: 25px;
+            }
+
+            .final-buttons {
+                flex-direction: column;
+            }
+        }
+
+        /* Hide sections initially */
+        .section:not(.active) {
+            display: none;
+        }
+    </style>
 </head>
-
 <body>
+    <!-- Audio Player -->
+    <audio id="bgMusic" loop>
+        <source src="jashn.mp3" type="audio/mpeg">
+    </audio>
+    <button class="audio-control" id="audioToggle">🔇</button>
 
-<audio autoplay loop>
-  <source src="jashn.mp3" type="audio/mpeg">
-</audio>
+    <!-- Floating Hearts Container -->
+    <div id="heartsContainer"></div>
 
-<!-- SCREEN 1 -->
-<div class="screen active">
-  <h2>Helloo my cutiee.</h2>
-  <h2>My Sherniii</h2>
-  <h2>My Janemannn</h2>
-  <p>I made something for you, my cutiiee valentine (I hope so), hehehehee</p>
-  <button onclick="next()">Lezzz Flaminggooo ❤️</button>
-</div>
+    <!-- Section 1: Landing -->
+    <section class="section active landing" id="section1">
+        <div class="landing-text">Helloo my cutiee.</div>
+        <div class="landing-text">My Sherniii</div>
+        <div class="landing-text">My Janemannn</div>
+        <div class="landing-text">I made something for you, my cutiee valentine (I hope so), hehehehee</div>
+        <button class="btn" onclick="nextSection()"><span>Lezzz Flaminggooo ❤️</span></button>
+    </section>
 
-<!-- SCREEN 2 -->
-<div class="screen">
-  <h2>💗 You’re not just my love. You’re my everything.</h2>
-  <div class="bubble">You’re the person I laugh with.</div>
-  <div class="bubble">Cry with.</div>
-  <div class="bubble">Dance with.</div>
-  <div class="bubble">Dream with.</div>
-  <div class="bubble">Build with.</div>
-  <div class="bubble">And somehow… you’re all of them.</div>
-  <button onclick="next()">See what I mean 👀</button>
-</div>
+    <!-- Section 2: Everything -->
+    <section class="section" id="section2">
+        <h1 class="section-title">💗 "You're not just my love. You're my everything."</h1>
+        <div class="bubble">You're the person I laugh with.</div>
+        <div class="bubble">Cry with.</div>
+        <div class="bubble">Dance with.</div>
+        <div class="bubble">Dream with.</div>
+        <div class="bubble">Build with.</div>
+        <div class="bubble emphasis">And somehow… you're all of them.</div>
+        <button class="btn" onclick="nextSection()"><span>See what I mean 👀</span></button>
+    </section>
 
-<!-- SCREEN 3 -->
-<div class="screen">
-  <h2>This picture didn’t know it was starting everything.</h2>
-  <img src="first-photo.jpg">
-  <p>But I’m glad it did.</p>
-  <button onclick="next()">Next</button>
-</div>
+    <!-- Section 3: Memories -->
+    <section class="section" id="section3">
+        <h1 class="section-title">Our Beautiful Moments</h1>
+        <div class="memory-grid">
+            <div class="memory-card" onclick="revealMemory(this)">
+                <img src="first-photo.jpg" class="memory-image" alt="Our First Photo">
+                <div class="memory-content">
+                    <div class="memory-title">Our First Photo</div>
+                    <div class="memory-text">
+                        "This picture didn't know it was starting everything."<br><br>
+                        "But I'm glad it did."
+                    </div>
+                </div>
+            </div>
 
-<!-- SCREEN 4 -->
-<div class="screen">
-  <h2>🎯 US KNOWLEDGE CHECK 😌❤️</h2>
-  <p>Okay miss smartie… Let’s see how well you remember us.</p>
-  <p>No stress. I love you even if you mess up 😌</p>
-  <button onclick="next()">Start</button>
-</div>
+            <div class="memory-card" onclick="revealMemory(this)">
+                <img src="dance.jpg" class="memory-image" alt="Dancing Together">
+                <div class="memory-content">
+                    <div class="memory-title">Dancing Together</div>
+                    <div class="memory-text">
+                        "Our steps and our soul sync on a different level"<br><br>
+                        "And when we dance, we are in our own world"
+                    </div>
+                </div>
+            </div>
 
-<!-- SCREEN 5 -->
-<div class="screen">
-  <h2>💖 COMPLIMENT GENERATOR</h2>
-  <div class="bubble">You make even bad moods give up on me.</div>
-  <div class="bubble">You’re the reason I smile at my phone like an idiot.</div>
-  <div class="bubble">You turn simple plans into stories.</div>
-  <div class="bubble">You make time disappear when you’re around.</div>
-  <div class="bubble">I like the way we fit and complement each other, like puzzle pieces made to go together.</div>
-  <p>And all of this… is just how you are.</p>
-  <p>No labels. No pressure.</p>
-  <p><b>But if you were my Valentine…</b></p>
-  <button onclick="next()">Here’s what you get 😌❤️</button>
-</div>
+            <div class="memory-card" onclick="revealMemory(this)">
+                <img src="dates.jpg" class="memory-image" alt="Fun Dates">
+                <div class="memory-content">
+                    <div class="memory-title">Fun Dates</div>
+                    <div class="memory-text">
+                        "Not fancy."<br><br>
+                        "Just us with our convos, teasing each other and with all the future plannings."<br><br>
+                        "And it's always perfect."
+                    </div>
+                </div>
+            </div>
 
-<!-- SCREEN 6 -->
-<div class="screen">
-  <h2>🎫 Limited Edition Valentine Passes</h2>
+            <div class="memory-card" onclick="revealMemory(this)">
+                <img src="play.jpg" class="memory-image" alt="Playing Together">
+                <div class="memory-content">
+                    <div class="memory-title">Playing Together</div>
+                    <div class="memory-text">
+                        "Both are competitive in nature"<br><br>
+                        "But you always somehow manage to win my heart every time"
+                    </div>
+                </div>
+            </div>
 
-  <div class="card" onclick="toggle(this)">
-    <b>JUST SAY NO CARD</b>
-    <p class="hidden">Because consent is hot. Say no anytime 😌</p>
-  </div>
+            <div class="memory-card" onclick="revealMemory(this)">
+                <img src="cook.jpg" class="memory-image" alt="Cooking Together">
+                <div class="memory-content">
+                    <div class="memory-title">Cooking Together</div>
+                    <div class="memory-text">
+                        "Some cooking."<br><br>
+                        "Some chaos."<br><br>
+                        "A lot of love."
+                    </div>
+                </div>
+            </div>
 
-  <div class="card" onclick="toggle(this)">
-    <b>BMS CARD</b>
-    <p class="hidden">Whenever you need me, I’ll be there.</p>
-  </div>
+            <div class="memory-card" onclick="revealMemory(this)">
+                <img src="walk.jpg" class="memory-image" alt="Walks Together">
+                <div class="memory-content">
+                    <div class="memory-title">Walks Together</div>
+                    <div class="memory-text">
+                        "Our best talks happen…"<br><br>
+                        "While walking nowhere."
+                    </div>
+                </div>
+            </div>
 
-  <div class="card" onclick="toggle(this)">
-    <b>NO-EMO CARD</b>
-    <p class="hidden">Temporary emotional mute button 😌</p>
-  </div>
+            <div class="memory-card" onclick="revealMemory(this)">
+                <img src="mountains.jpg" class="memory-image" alt="Mountains Together">
+                <div class="memory-content">
+                    <div class="memory-title">Mountains Together</div>
+                    <div class="memory-text">
+                        "You, me, and the mountains."<br><br>
+                        "That's my favourite view."
+                    </div>
+                </div>
+            </div>
 
-  <div class="card" onclick="toggle(this)">
-    <b>THE PEACE CARD</b>
-    <p class="hidden">1 hour of uninterrupted peace. Still yours after.</p>
-  </div>
+            <div class="memory-card" onclick="revealMemory(this)">
+                <img src="travel.jpg" class="memory-image" alt="Traveling Together">
+                <div class="memory-content">
+                    <div class="memory-title">Traveling Together</div>
+                    <div class="memory-text">
+                        "I don't care about the destination."<br><br>
+                        "As long as it's with you."
+                    </div>
+                </div>
+            </div>
 
-  <p>Sooo…</p>
-  <button onclick="next()">One last thing 👀</button>
-</div>
+            <div class="memory-card" onclick="revealMemory(this)">
+                <img src="care.jpg" class="memory-image" alt="Taking care of Each Other">
+                <div class="memory-content">
+                    <div class="memory-title">Taking care of Each Other</div>
+                    <div class="memory-text">
+                        "Sometimes, it's also forceful(baam)"<br><br>
+                        "But always with care and love."
+                    </div>
+                </div>
+            </div>
 
-<!-- SCREEN 7 -->
-<div class="screen">
-  <h2>💘 Will you be my Valentine? ❤️</h2>
-  <p>No pressure. Just vibes 😌</p>
+            <div class="memory-card" onclick="revealMemory(this)">
+                <img src="garba.jpg" class="memory-image" alt="Garba Together">
+                <div class="memory-content">
+                    <div class="memory-title">Garba Together</div>
+                    <div class="memory-text">
+                        "THE BEST TIME"<br><br>
+                        "What is better than watching you doing your anytime mood-lifter?"
+                    </div>
+                </div>
+            </div>
 
-  <button class="yes-btn" onclick="yes()">YES 😌❤️</button>
-  <button class="no-btn" id="noBtn">NO 🙄</button>
-</div>
+            <div class="memory-card" onclick="revealMemory(this)">
+                <img src="temple.jpg" class="memory-image" alt="Temple Together">
+                <div class="memory-content">
+                    <div class="memory-title">Temple Together</div>
+                    <div class="memory-text">
+                        "I don't ask for much."<br><br>
+                        "I just say thank you & keep my love safe and happy, always!"
+                    </div>
+                </div>
+            </div>
 
-<script>
-let screens = document.querySelectorAll('.screen');
-let current = 0;
+            <div class="memory-card" onclick="revealMemory(this)">
+                <img src="sleep.jpg" class="memory-image" alt="Sleeping Together">
+                <div class="memory-content">
+                    <div class="memory-title">Sleeping Together</div>
+                    <div class="memory-text">
+                        "This is what peace looks like."<br><br>
+                        "You feel like my home."
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn" onclick="nextSection()"><span>Next ❤️</span></button>
+    </section>
 
-function next() {
-  screens[current].classList.remove('active');
-  current++;
-  screens[current].classList.add('active');
-}
+    <!-- Section 4: Quiz Intro -->
+    <section class="section" id="section4">
+        <div class="quiz-intro">
+            <h1 class="section-title">US KNOWLEDGE CHECK 😌❤️</h1>
+            <p>"Okay miss smartie…"</p>
+            <p>"Let's see how well you remember us."</p>
+            <p>"No stress."</p>
+            <p>"I love you even if you mess up 😌"</p>
+        </div>
+        <button class="btn" onclick="startQuiz()"><span>Let's Start 💕</span></button>
+    </section>
 
-function toggle(card) {
-  card.querySelector('.hidden').classList.toggle('hidden');
-}
+    <!-- Section 5-10: Quiz Questions -->
+    <section class="section" id="section5">
+        <div class="question-container">
+            <div class="question">1️⃣ When did I ask you out for the first time? 💌</div>
+            <div class="options">
+                <button class="option-btn" onclick="answerQuestion(1, 'September', true)">September</button>
+                <button class="option-btn" onclick="answerQuestion(1, 'April', false)">April</button>
+            </div>
+            <div class="answer-feedback" id="answer1"></div>
+        </div>
+    </section>
 
-const noBtn = document.getElementById("noBtn");
-noBtn.addEventListener("mouseover", () => {
-  noBtn.style.top = Math.random() * 80 + "%";
-  noBtn.style.left = Math.random() * 80 + "%";
-});
+    <section class="section" id="section6">
+        <div class="question-container">
+            <div class="question">2️⃣ When did we sleep close together for the first time? 🌙</div>
+            <div class="options">
+                <button class="option-btn" onclick="answerQuestion(2, 'October', false)">October</button>
+                <button class="option-btn" onclick="answerQuestion(2, 'August', true)">August</button>
+            </div>
+            <div class="answer-feedback" id="answer2"></div>
+        </div>
+    </section>
 
-function yes() {
-  document.body.innerHTML = `
-    <div style="height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;background:linear-gradient(135deg,#ff9a9e,#fad0c4);">
-      <h1>Happy Valentine’s Day in advance, my cutiee ❤️</h1>
-    </div>`;
-}
-</script>
+    <section class="section" id="section7">
+        <div class="question-container">
+            <div class="question">3️⃣ When did you write something for me for the first time? ✍️❤️</div>
+            <div class="options">
+                <button class="option-btn" onclick="answerQuestion(3, 'May', false)">May</button>
+                <button class="option-btn" onclick="answerQuestion(3, 'November', true)">November</button>
+            </div>
+            <div class="answer-feedback" id="answer3"></div>
+        </div>
+    </section>
 
+    <section class="section" id="section8">
+        <div class="question-container">
+            <div class="question">4️⃣ When did we kiss for the first time? 💋</div>
+            <div class="options">
+                <button class="option-btn" onclick="answerQuestion(4, 'March', true)">March</button>
+                <button class="option-btn" onclick="answerQuestion(4, 'November', false)">November</button>
+            </div>
+            <div class="answer-feedback" id="answer4"></div>
+        </div>
+    </section>
+
+    <section class="section" id="section9">
+        <div class="question-container">
+            <div class="question">5️⃣ When did we make love for the first time? 💞</div>
+            <div class="options">
+                <button class="option-btn" onclick="answerQuestion(5, 'July', false)">July</button>
+                <button class="option-btn" onclick="answerQuestion(5, 'August', true)">August</button>
+            </div>
+            <div class="answer-feedback" id="answer5"></div>
+        </div>
+    </section>
+
+    <section class="section" id="section10">
+        <div class="question-container">
+            <div class="question">6️⃣ When was our first date? 🥰</div>
+            <div class="options">
+                <button class="option-btn" onclick="answerQuestion(6, 'August', true)">August</button>
+                <button class="option-btn" onclick="answerQuestion(6, 'September', false)">September</button>
+            </div>
+            <div class="answer-feedback" id="answer6"></div>
+        </div>
+    </section>
+
+    <!-- Section 11: Quiz Ending -->
+    <section class="section" id="section11">
+        <div style="max-width: 800px; text-align: center;">
+            <h1 class="section-title">🌸</h1>
+            <div class="transition-text">"Maybe you remembered all the dates."</div>
+            <div class="transition-text">"Maybe you missed a few."</div>
+            <div class="transition-text">"But that's not what matters to me."</div>
+            <div class="transition-text">"What matters is this—"</div>
+            <div class="transition-text">"We felt it."</div>
+            <div class="transition-text">"And we were happy."</div>
+            <div class="transition-text">"Every laugh."</div>
+            <div class="transition-text">"Every moment."</div>
+            <div class="transition-text">"Every memory."</div>
+            <div class="transition-text">"And whatever we are today…"</div>
+            <div class="transition-text">"Those feelings were real."</div>
+            <div class="transition-text">"And they mean a lot to me."</div>
+            <button class="btn" onclick="nextSection()"><span>Let me tell you why I love you ❤️</span></button>
+        </div>
+    </section>
+
+    <!-- Section 12: Compliments -->
+    <section class="section" id="section12">
+        <h1 class="section-title">Why I Love You</h1>
+        <div class="compliment-box">
+            <div class="compliment-text" id="complimentText"></div>
+            <button class="btn" onclick="nextCompliment()"><span>Tell me more 💕</span></button>
+        </div>
+    </section>
+
+    <!-- Section 13: Transition to Cards -->
+    <section class="section" id="section13">
+        <div style="max-width: 800px; text-align: center;">
+            <div class="transition-text">"And all of this…"</div>
+            <div class="transition-text">"Is just how you are."</div>
+            <div class="transition-text">"We felt it."</div>
+            <div class="transition-text">"We were happy."</div>
+            <div class="transition-text">"No labels."</div>
+            <div class="transition-text">"No pressure."</div>
+            <div class="transition-text">"But if you were my Valentine…"</div>
+            <button class="btn" onclick="nextSection()"><span>Here's what you get 😌❤️</span></button>
+        </div>
+    </section>
+
+    <!-- Section 14: Valentine Cards -->
+    <section class="section" id="section14">
+        <h1 class="section-title">Limited Edition Valentine Passes</h1>
+        <p style="text-align: center; font-size: 1.2rem; color: var(--text-light); margin-bottom: 10px;">
+            (Non-transferable. Non-refundable. Valid only with me.)
+        </p>
+        <p style="text-align: center; font-size: 1.1rem; color: var(--romantic-red); font-weight: 600; margin-bottom: 5px;">
+            3 passes each
+        </p>
+        <p style="text-align: center; font-size: 1rem; font-style: italic; color: var(--text-light); margin-bottom: 40px;">
+            "Use wisely. Misuse may result in extra hugs."
+        </p>
+        
+        <div class="cards-grid">
+            <div class="valentine-card" onclick="flipCard(this)">
+                <div class="card-front">
+                    <div class="card-emoji">🟥</div>
+                    <div class="card-title">JUST SAY NO CARD</div>
+                    <div class="card-subtitle">"Because consent is hot."</div>
+                </div>
+                <div class="card-back">
+                    <div class="card-benefits">
+                        "I know my back-scratching demands can appear randomly."<br><br>
+                        "And sometimes… aggressively."<br><br>
+                        "This card gives you full permission to say NO."<br><br>
+                        "No guilt."<br>
+                        "No drama."<br><br>
+                        "But please note…"<br><br>
+                        "Overuse may hurt my feelings just a tiny bit."<br><br>
+                        "So consider this a special request card, not a daily feature 😌"
+                    </div>
+                </div>
+            </div>
+
+            <div class="valentine-card" onclick="flipCard(this)">
+                <div class="card-front">
+                    <div class="card-emoji">🟦</div>
+                    <div class="card-title">BMS CARD</div>
+                    <div class="card-subtitle">"When you just need… me."</div>
+                </div>
+                <div class="card-back">
+                    <div class="card-benefits">
+                        "Whenever you miss me."<br>
+                        "Whenever you need me."<br>
+                        "Whenever you just want me next to you."<br><br>
+                        "At that exact moment…"<br><br>
+                        "I'll be there."<br><br>
+                        "No questions."<br>
+                        "No explanations."<br><br>
+                        "Just me, by your side."
+                    </div>
+                    <div class="card-note">Distance permitting. Heart always available.</div>
+                </div>
+            </div>
+
+            <div class="valentine-card" onclick="flipCard(this)">
+                <div class="card-front">
+                    <div class="card-emoji">🟨</div>
+                    <div class="card-title">NO-EMO CARD</div>
+                    <div class="card-subtitle">"For emotionally overloaded days."</div>
+                </div>
+                <div class="card-back">
+                    <div class="card-benefits">
+                        "If I start feeling too much."<br>
+                        "Thinking too deep."<br>
+                        "Talking too soft."<br><br>
+                        "You can play this card."<br><br>
+                        "I will instantly tone it down."<br><br>
+                        "No overthinking."<br>
+                        "No emotional speeches."<br><br>
+                        "Just calm."<br>
+                        "Just normal."<br>
+                        "Just us."
+                    </div>
+                    <div class="card-note">Temporary emotional mute button 😌</div>
+                </div>
+            </div>
+
+            <div class="valentine-card" onclick="flipCard(this)">
+                <div class="card-front">
+                    <div class="card-emoji">🟩</div>
+                    <div class="card-title">THE PEACE CARD</div>
+                    <div class="card-subtitle">"Because space is also love."</div>
+                </div>
+                <div class="card-back">
+                    <div class="card-benefits">
+                        "If you're tired."<br>
+                        "If you need silence."<br>
+                        "If you just want your own space."<br><br>
+                        "Use this card."<br><br>
+                        "You get 1 full hour of uninterrupted peace."<br><br>
+                        "No messages."<br>
+                        "No calls."<br>
+                        "No 'just one text'."<br><br>
+                        "I'll still be here after."<br>
+                        "Exactly the same."
+                    </div>
+                    <div class="card-note">This card cannot be used multiple times at one go.</div>
+                </div>
+            </div>
+        </div>
+        <button class="btn" onclick="nextSection()"><span>One last thing 👀</span></button>
+    </section>
+
+    <!-- Section 15: Final Question -->
+    <section class="section" id="section15">
+        <div class="final-question">
+            <h1 class="final-heading">Will you be my Valentine? ❤️</h1>
+            <div class="final-subtext">
+                "No pressure."<br>
+                "Just vibes."<br>
+                "Answer honestly 😌"
+            </div>
+            <div class="final-buttons">
+                <button class="final-btn yes-btn" onclick="yesClicked()">YES 😌❤️</button>
+                <button class="final-btn no-btn" id="noBtn" onmouseover="moveNoButton()" onclick="noClicked()">NO 🙄</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 16: Success -->
+    <section class="section" id="section16">
+        <div class="success-screen">
+            <div class="success-emoji">💕</div>
+            <div class="success-text">"I was really hoping you'd say that."</div>
+            <div class="success-text" style="margin-top: 40px;">
+                "Happy Valentine's Day in advance, my cutiee"
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Current section tracker
+        let currentSection = 1;
+        let complimentIndex = 0;
+        let quizAnswered = [false, false, false, false, false, false];
+
+        // Compliments array
+        const compliments = [
+            "You make even bad moods give up on me.",
+            "You're the reason I smile at my phone like an idiot.",
+            "You somehow look cute doing absolutely nothing.",
+            "You make me forget what I was annoyed about. Instantly.",
+            "You're dangerous… to my self-control.",
+            "You turn simple plans into stories.",
+            "You make me want to stay a little longer, every time.",
+            "You make teasing way too tempting.",
+            "You have a talent for distracting me.",
+            "You make time disappear when you're around.",
+            "You're cute, and you know it… but you still act surprised.",
+            "You make my days more interesting without trying.",
+            "You have no idea how attractive your laugh is.",
+            "You somehow win every argument without trying.",
+            "You make my focus disappear (in a good way).",
+            "You're my favorite kind of trouble.",
+            "You make things feel just right.",
+            "You make even serious moments feel lighter.",
+            "You have this effortless charm that sneaks up on me.",
+            { text: "I love the way you dance like you're completely free.", warm: true },
+            { text: "I admire how you hold your emotions with so much maturity.", warm: true },
+            { text: "I like how you find joy in the smallest things in life.", warm: true },
+            { text: "You get happy over little moments, and that's rare.", warm: true },
+            { text: "I love how deeply you care about elderly people — it says a lot about you.", warm: true },
+            { text: "The way you respect people older than you really stands out.", warm: true },
+            { text: "I love how you quietly support the people you love.", warm: true },
+            { text: "You show up for your people without making noise about it.", warm: true },
+            { text: "I admire how spiritual you are in your own calm, honest way.", warm: true },
+            { text: "Your faith feels grounding, not forced.", warm: true },
+            { text: "I love how you aspire to do something meaningful for India.", warm: true },
+            { text: "You have a beautiful balance of strength and softness.", warm: true },
+            { text: "I love watching you sleep so peacefully, it makes me pause and smile.", warm: true },
+            { text: "I like the way we fit and complement each other, like puzzle pieces made to go together.", warm: true },
+            { text: "You make me better, without even trying.", warm: true },
+            { text: "I really, really like who you are.", warm: true }
+        ];
+
+        // Initialize floating hearts
+        function createHearts() {
+            const container = document.getElementById('heartsContainer');
+            const hearts = ['❤️', '💕', '💖', '💗', '💓', '💝'];
+            
+            for (let i = 0; i < 15; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.top = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 4 + 's';
+                container.appendChild(heart);
+            }
+        }
+
+        // Mouse move effect for hearts
+        document.addEventListener('mousemove', (e) => {
+            const hearts = document.querySelectorAll('.heart');
+            hearts.forEach((heart, index) => {
+                const speed = (index % 3 + 1) * 0.05;
+                const x = (e.clientX - window.innerWidth / 2) * speed;
+                const y = (e.clientY - window.innerHeight / 2) * speed;
+                heart.style.transform = `translate(${x}px, ${y}px)`;
+            });
+        });
+
+        // Animate landing text on load
+        window.addEventListener('load', () => {
+            createHearts();
+            const texts = document.querySelectorAll('#section1 .landing-text');
+            const button = document.querySelector('#section1 .btn');
+            
+            texts.forEach((text, index) => {
+                setTimeout(() => {
+                    text.classList.add('show');
+                }, index * 800);
+            });
+
+            setTimeout(() => {
+                button.classList.add('show');
+            }, texts.length * 800 + 400);
+        });
+
+        // Next section function
+        function nextSection() {
+            // Immediate scroll to top
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+            
+            const current = document.getElementById(`section${currentSection}`);
+            current.classList.remove('active');
+            current.style.display = 'none';
+            
+            currentSection++;
+            const next = document.getElementById(`section${currentSection}`);
+            next.style.display = 'flex';
+            
+            // Force scroll to top again
+            window.scrollTo(0, 0);
+            
+            setTimeout(() => {
+                next.classList.add('active');
+                animateSectionContent(currentSection);
+                // One more scroll to top to be sure
+                window.scrollTo(0, 0);
+            }, 50);
+        }
+
+        // Animate section content
+        function animateSectionContent(sectionNum) {
+            const section = document.getElementById(`section${sectionNum}`);
+            
+            if (sectionNum === 2) {
+                const bubbles = section.querySelectorAll('.bubble');
+                const button = section.querySelector('.btn');
+                bubbles.forEach((bubble, index) => {
+                    setTimeout(() => {
+                        bubble.classList.add('show');
+                    }, index * 400);
+                });
+                setTimeout(() => {
+                    button.classList.add('show');
+                }, bubbles.length * 400 + 200);
+            }
+            
+            if (sectionNum === 3) {
+                const cards = section.querySelectorAll('.memory-card');
+                const button = section.querySelector('.btn');
+                cards.forEach((card, index) => {
+                    setTimeout(() => {
+                        card.classList.add('show');
+                    }, index * 150);
+                });
+                setTimeout(() => {
+                    button.classList.add('show');
+                }, cards.length * 150 + 200);
+            }
+            
+            if (sectionNum === 4) {
+                const texts = section.querySelectorAll('.quiz-intro p');
+                const button = section.querySelector('.btn');
+                texts.forEach((text, index) => {
+                    setTimeout(() => {
+                        text.classList.add('show');
+                    }, index * 600);
+                });
+                setTimeout(() => {
+                    button.classList.add('show');
+                }, texts.length * 600 + 200);
+            }
+
+            if (sectionNum >= 5 && sectionNum <= 10) {
+                const container = section.querySelector('.question-container');
+                setTimeout(() => {
+                    container.classList.add('show');
+                }, 100);
+            }
+
+            if (sectionNum === 11 || sectionNum === 13) {
+                const texts = section.querySelectorAll('.transition-text');
+                const button = section.querySelector('.btn');
+                texts.forEach((text, index) => {
+                    setTimeout(() => {
+                        text.classList.add('show');
+                    }, index * 800);
+                });
+                setTimeout(() => {
+                    button.classList.add('show');
+                }, texts.length * 800 + 400);
+            }
+
+            if (sectionNum === 12) {
+                showCompliment();
+            }
+
+            if (sectionNum === 14) {
+                const cards = section.querySelectorAll('.valentine-card');
+                const button = section.querySelector('.btn');
+                cards.forEach((card, index) => {
+                    setTimeout(() => {
+                        card.classList.add('show');
+                    }, index * 200);
+                });
+                setTimeout(() => {
+                    button.classList.add('show');
+                }, cards.length * 200 + 300);
+            }
+        }
+
+        // Reveal memory text
+        function revealMemory(card) {
+            card.classList.toggle('clicked');
+        }
+
+        // Start quiz
+        function startQuiz() {
+            nextSection();
+        }
+
+        // Answer question
+        function answerQuestion(questionNum, answer, isCorrect) {
+            const feedback = document.getElementById(`answer${questionNum}`);
+            const options = document.querySelectorAll(`#section${currentSection} .option-btn`);
+            
+            // Remove any existing next button
+            const existingBtn = feedback.parentElement.querySelector('.btn');
+            if (existingBtn) {
+                existingBtn.remove();
+            }
+            
+            const answers = {
+                1: {
+                    correct: "Yesss ❤️<br><br>It was 2nd September 2022, outside our college.<br><br>The first time I ever asked someone out… and I'm so glad it was you.",
+                    wrong: "Hmm… close, but nope 😏<br><br>Still cute though.<br><br>And still mine."
+                },
+                2: {
+                    correct: "Yessssss 💕<br><br>20th August 2023, our Karjat trip.<br><br>The first time we were veryyy close.<br><br>And it felt… right.",
+                    wrong: "Wrong answer, cutie.<br><br>But I remember it perfectly — so we're good 😌"
+                },
+                3: {
+                    correct: `YES 🥹<br><br>21st November 2023.<br><br>And you wrote this…<br><br><div class="gujarati-poem">માન્યુ કે ઘણી વાર હાજર નથી હોતી,
+પણ એવું નથી કે થવા નથી માંગતી,,
+માન્યું કે ઘણી વસ્તુઓ માં ચુકી જાઉં છું,
+પણ દોસ્તી માં ક્યારેય ચૂકીશ નહિ,,
+માન્યું કે વસ્તુઓથી મારી ખુશી નથી જતાવતી,
+પણ તારી કામયાબી માં ખરેખર દિલથી ઝૂમી ઉઠું છું,,
+માન્યું કે ઘણી વસ્તુઓ દેખાય નહિ,
+પણ વિશ્વાસ કર, લાગણીયો ઓછી નથી,,
+માન્યું કે તું જલ્દી જતાવતો નથી,
+પણ કહીશ નહિ તો કેમ ચાલશે,,
+માન્યું કે તને આ બધું લખેલું થોડુંક વધારે લાગશે,
+પણ આપડી દોસ્તી અને તારી અંદર ની ભાવનાઓ ક્યાં ઓછી છે !</div><br>I love it when you write for me.<br><br>Your words are beautiful… because your emotions are pure, cutie.`,
+                    wrong: "Nopeee 😌<br><br>But that message?<br><br>I was touched by words for the first time… and I felt something different."
+                },
+                4: {
+                    correct: "Yesss 😏❤️<br><br>1st March 2024.<br><br>And yes… with Bacardi Orange.<br><br>Iconic moment. And great teaching skills 😉",
+                    wrong: "Wrong answer.<br><br>You owe me a kiss right now 😌"
+                },
+                5: {
+                    correct: "Correct 💗<br><br>6th August 2024.<br><br>I came to your home between office hours from Prabhadevi.<br><br>Worth every second.",
+                    wrong: "Hehe, nope.<br><br>But I love that you tried 😌"
+                },
+                6: {
+                    correct: "Yesss 😄<br><br>Also 6th August 2024.<br><br>Right after we made love.<br><br>And yes… you know the location 😉 hehe!",
+                    wrong: "Wrong.<br><br>But honestly?<br><br>Every moment with you feels like a date."
+                }
+            };
+
+            feedback.innerHTML = isCorrect ? answers[questionNum].correct : answers[questionNum].wrong;
+            feedback.className = `answer-feedback show ${isCorrect ? 'correct' : 'wrong'}`;
+
+            setTimeout(() => {
+                const nextBtn = document.createElement('button');
+                nextBtn.className = 'btn show';
+                nextBtn.innerHTML = '<span>Next Question ➡️</span>';
+                nextBtn.onclick = nextSection;
+                feedback.parentElement.appendChild(nextBtn);
+            }, 1000);
+        }
+
+        // Show compliment
+        function showCompliment() {
+            const complimentText = document.getElementById('complimentText');
+            
+            if (complimentIndex < compliments.length) {
+                const compliment = compliments[complimentIndex];
+                const text = typeof compliment === 'string' ? compliment : compliment.text;
+                const isWarm = typeof compliment === 'object' && compliment.warm;
+                
+                complimentText.textContent = text;
+                complimentText.className = `compliment-text ${isWarm ? 'warm' : ''}`;
+                
+                setTimeout(() => {
+                    complimentText.classList.add('show');
+                }, 100);
+            } else {
+                nextSection();
+            }
+        }
+
+        // Next compliment
+        function nextCompliment() {
+            complimentIndex++;
+            showCompliment();
+        }
+
+        // Flip card
+        function flipCard(card) {
+            card.classList.toggle('flipped');
+        }
+
+        // No button movement
+        function moveNoButton() {
+            const noBtn = document.getElementById('noBtn');
+            const maxX = window.innerWidth - noBtn.offsetWidth - 40;
+            const maxY = window.innerHeight - noBtn.offsetHeight - 40;
+            
+            const newX = Math.random() * maxX;
+            const newY = Math.random() * maxY;
+            
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = newX + 'px';
+            noBtn.style.top = newY + 'px';
+        }
+
+        // No clicked (if they manage to click it)
+        function noClicked() {
+            alert("Hehe, you can't say no! Try the YES button instead 😌");
+        }
+
+        // Yes clicked
+        function yesClicked() {
+            createConfetti();
+            createFireworks();
+            
+            setTimeout(() => {
+                nextSection();
+                // Animate success text slowly
+                setTimeout(() => {
+                    const successTexts = document.querySelectorAll('#section16 .success-text');
+                    successTexts.forEach((text, index) => {
+                        setTimeout(() => {
+                            text.style.opacity = '0';
+                            text.style.transform = 'translateY(20px)';
+                            setTimeout(() => {
+                                text.style.transition = 'all 1s ease';
+                                text.style.opacity = '1';
+                                text.style.transform = 'translateY(0)';
+                            }, 100);
+                        }, index * 1500);
+                    });
+                }, 500);
+            }, 1000);
+        }
+
+        // Create confetti
+        function createConfetti() {
+            const colors = ['#FF9999', '#FFD4D4', '#E67E7E', '#FFE5E5', '#D4AF37'];
+            for (let i = 0; i < 150; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.top = -10 + 'px';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                confetti.style.width = (Math.random() * 10 + 5) + 'px';
+                confetti.style.height = (Math.random() * 10 + 5) + 'px';
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => {
+                    confetti.remove();
+                }, 4000);
+            }
+        }
+
+        // Create fireworks
+        function createFireworks() {
+            const colors = ['#FF9999', '#FFD4D4', '#E67E7E', '#FFE5E5', '#D4AF37', '#FF6B6B'];
+            
+            for (let i = 0; i < 8; i++) {
+                setTimeout(() => {
+                    const x = Math.random() * window.innerWidth;
+                    const y = Math.random() * (window.innerHeight * 0.6);
+                    
+                    for (let j = 0; j < 30; j++) {
+                        const firework = document.createElement('div');
+                        firework.className = 'firework';
+                        firework.style.left = x + 'px';
+                        firework.style.top = y + 'px';
+                        firework.style.background = colors[Math.floor(Math.random() * colors.length)];
+                        
+                        const angle = (Math.PI * 2 * j) / 30;
+                        const velocity = 100 + Math.random() * 100;
+                        const tx = Math.cos(angle) * velocity;
+                        const ty = Math.sin(angle) * velocity;
+                        
+                        firework.style.setProperty('--tx', tx + 'px');
+                        firework.style.setProperty('--ty', ty + 'px');
+                        
+                        document.body.appendChild(firework);
+                        
+                        setTimeout(() => {
+                            firework.remove();
+                        }, 1000);
+                    }
+                }, i * 300);
+            }
+        }
+
+        // Audio control
+        const audio = document.getElementById('bgMusic');
+        const audioToggle = document.getElementById('audioToggle');
+        let isPlaying = false;
+
+        audioToggle.addEventListener('click', () => {
+            if (isPlaying) {
+                audio.pause();
+                audioToggle.textContent = '🔇';
+            } else {
+                audio.play();
+                audioToggle.textContent = '🔊';
+            }
+            isPlaying = !isPlaying;
+        });
+    </script>
 </body>
 </html>
