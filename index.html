@@ -716,10 +716,12 @@
 </head>
 <body>
     <!-- Audio Player -->
-    <audio id="bgMusic" loop>
+    <audio id="bgMusic" loop preload="auto">
         <source src="jashn.mp3" type="audio/mpeg">
+        <source src="jashn.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
     </audio>
-    <button class="audio-control" id="audioToggle">🔇</button>
+    <button class="audio-control" id="audioToggle" title="Click to play music">🔇</button>
 
     <!-- Floating Hearts Container -->
     <div id="heartsContainer"></div>
@@ -1539,15 +1541,50 @@
         const audioToggle = document.getElementById('audioToggle');
         let isPlaying = false;
 
-        audioToggle.addEventListener('click', () => {
-            if (isPlaying) {
-                audio.pause();
-                audioToggle.textContent = '🔇';
-            } else {
-                audio.play();
-                audioToggle.textContent = '🔊';
+        // Preload audio
+        audio.load();
+
+        audioToggle.addEventListener('click', async () => {
+            try {
+                if (isPlaying) {
+                    audio.pause();
+                    audioToggle.textContent = '🔇';
+                    isPlaying = false;
+                } else {
+                    // Try to play
+                    const playPromise = audio.play();
+                    
+                    if (playPromise !== undefined) {
+                        playPromise
+                            .then(() => {
+                                // Audio is playing
+                                audioToggle.textContent = '🔊';
+                                isPlaying = true;
+                            })
+                            .catch(error => {
+                                // Auto-play was prevented
+                                console.log('Playback prevented:', error);
+                                alert('Please click the music button again to play audio!');
+                                audioToggle.textContent = '🔇';
+                                isPlaying = false;
+                            });
+                    }
+                }
+            } catch (error) {
+                console.error('Audio error:', error);
+                alert('Audio file could not be loaded. Please make sure jashn.mp3 is uploaded to GitHub.');
             }
-            isPlaying = !isPlaying;
+        });
+
+        // Check if audio can play
+        audio.addEventListener('canplay', () => {
+            console.log('Audio is ready to play');
+        });
+
+        audio.addEventListener('error', (e) => {
+            console.error('Audio loading error:', e);
+            audioToggle.style.background = 'linear-gradient(135deg, #999, #666)';
+            audioToggle.title = 'Audio file not found or cannot be loaded';
         });
     </script>
 </body>
