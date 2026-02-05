@@ -716,12 +716,10 @@
 </head>
 <body>
     <!-- Audio Player -->
-    <audio id="bgMusic" loop preload="auto">
+    <audio id="bgMusic" loop>
         <source src="jashn.mp3" type="audio/mpeg">
-        <source src="jashn.mp3" type="audio/mp3">
-        Your browser does not support the audio element.
     </audio>
-    <button class="audio-control" id="audioToggle" title="Click to play music">🔇</button>
+    <button class="audio-control" id="audioToggle">🔇</button>
 
     <!-- Floating Hearts Container -->
     <div id="heartsContainer"></div>
@@ -892,7 +890,7 @@
     <section class="section" id="section4">
         <div class="quiz-intro">
             <h1 class="section-title">US KNOWLEDGE CHECK 😌❤️</h1>
-            <p>"Okay miss smartie…"</p>
+            <p>"Okay Mrs. smartie…"</p>
             <p>"Let's see how well you remember us."</p>
             <p>"No stress."</p>
             <p>"I love you even if you mess up 😌"</p>
@@ -1541,50 +1539,29 @@
         const audioToggle = document.getElementById('audioToggle');
         let isPlaying = false;
 
-        // Preload audio
-        audio.load();
-
-        audioToggle.addEventListener('click', async () => {
-            try {
-                if (isPlaying) {
-                    audio.pause();
-                    audioToggle.textContent = '🔇';
-                    isPlaying = false;
-                } else {
-                    // Try to play
-                    const playPromise = audio.play();
-                    
-                    if (playPromise !== undefined) {
-                        playPromise
-                            .then(() => {
-                                // Audio is playing
-                                audioToggle.textContent = '🔊';
-                                isPlaying = true;
-                            })
-                            .catch(error => {
-                                // Auto-play was prevented
-                                console.log('Playback prevented:', error);
-                                alert('Please click the music button again to play audio!');
-                                audioToggle.textContent = '🔇';
-                                isPlaying = false;
-                            });
-                    }
-                }
-            } catch (error) {
-                console.error('Audio error:', error);
-                alert('Audio file could not be loaded. Please make sure jashn.mp3 is uploaded to GitHub.');
+        audioToggle.addEventListener('click', function() {
+            if (isPlaying) {
+                audio.pause();
+                audioToggle.textContent = '🔇';
+                isPlaying = false;
+            } else {
+                audio.play().then(function() {
+                    audioToggle.textContent = '🔊';
+                    isPlaying = true;
+                }).catch(function(error) {
+                    console.log('Play failed:', error);
+                    // Try again after a brief moment
+                    setTimeout(function() {
+                        audio.play().then(function() {
+                            audioToggle.textContent = '🔊';
+                            isPlaying = true;
+                        }).catch(function(err) {
+                            console.error('Audio error:', err);
+                            alert('Click the button one more time to play music!');
+                        });
+                    }, 100);
+                });
             }
-        });
-
-        // Check if audio can play
-        audio.addEventListener('canplay', () => {
-            console.log('Audio is ready to play');
-        });
-
-        audio.addEventListener('error', (e) => {
-            console.error('Audio loading error:', e);
-            audioToggle.style.background = 'linear-gradient(135deg, #999, #666)';
-            audioToggle.title = 'Audio file not found or cannot be loaded';
         });
     </script>
 </body>
